@@ -56,3 +56,10 @@ reach the same file through different lexical spellings (for example
 reported as a cycle if they appear twice in one chain.  We chose lexical
 normalization rather than `os.path.realpath` because the latter would
 re-introduce the very cycle-truncation we are trying to avoid.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
